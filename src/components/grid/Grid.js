@@ -9,7 +9,7 @@ const Grid = ({ plot }) => {
     };
 
     const squares = plot.map(sq => {
-        return <Square key={sq.id} id={sq.id} exits={sq.exits} />;
+        return <Square key={sq.id} plot={sq} />;
     });
 
     return (
@@ -23,6 +23,7 @@ Grid.propTypes = {
     plot: PropTypes.arrayOf(
         PropTypes.shape({
             id: PropTypes.string,
+            path: PropTypes.bool,
             exits: PropTypes.arrayOf(
                 PropTypes.shape({
                     dir: PropTypes.string,

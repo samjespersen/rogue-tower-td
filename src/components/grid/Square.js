@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Square = ({ id, exits }) => {
+const Square = ({ plot }) => {
 
     const squareStyle = {
         height: '10px',
@@ -9,27 +9,30 @@ const Square = ({ id, exits }) => {
         border: '1px solid black'
     };
 
-    if(exits.length) {
-        exits.forEach(exit => {
+    if(plot.exits.length) {
+        plot.exits.forEach(exit => {
             squareStyle[`border-${exit.dir}`] = 'none';
         });
     }
 
     return (
-        <div style={squareStyle} id={id}>
+        <div style={squareStyle} id={plot.id}>
         </div >
     );
 
 };
 
 Square.propTypes = {
-    id: PropTypes.string,
-    exits: PropTypes.arrayOf(
-        PropTypes.shape({
-            dir: PropTypes.string,
-            id: PropTypes.string
-        })
-    )
+    plot: PropTypes.shape({
+        id: PropTypes.string,
+        path: PropTypes.bool,
+        exits: PropTypes.arrayOf(
+            PropTypes.shape({
+                dir: PropTypes.string,
+                id: PropTypes.string
+            })
+        )
+    })
 };
 
 export default Square;
