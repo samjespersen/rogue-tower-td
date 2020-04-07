@@ -1,9 +1,9 @@
 import React from 'react';
-import Grid from './Field/Grid';
+import PlayArea from './Field/PlayArea';
 
 const App = () => {
     return (
-        <Grid />
+        <PlayArea />
     );
 };
 
