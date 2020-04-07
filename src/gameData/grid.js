@@ -1,4 +1,4 @@
-const path2 = [
+export const grid2 = [
     ['R', 'RBL', 'RL', 'RL', 'LB', 'X'],
     ['X', 'TB', 'X', 'X', 'TB', 'X'],
     ['X', 'TR', 'BL', 'X', 'TB', 'X'],
@@ -9,7 +9,7 @@ const path2 = [
 
 
 
-const path = [
+export const grid = [
     ['X', 'X', 'X', 'X', 'TB', 'X', 'X', 'X', 'X', 'X'],
     ['X', 'X', 'X', 'X', 'TB', 'X', 'X', 'X', 'X', 'X'],
     ['X', 'X', 'BR', 'RL', 'TLR', 'RL', 'LR', 'LB', 'X', 'X'],
@@ -21,5 +21,3 @@ const path = [
     ['X', 'X', 'X', 'X', 'X', 'TB', 'X', 'X', 'X', 'X'],
     ['X', 'X', 'X', 'X', 'X', 'TB', 'X', 'X', 'X', 'X']
 ];
-
-export default path;
