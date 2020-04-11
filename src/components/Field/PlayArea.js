@@ -1,32 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getGrid, getEnemies, getRows, getCols } from '../../selectors/gameSelectors';
 import { renderGrid, moveEnemy } from '../../actions/gameActions';
 import Grid from './Grid';
 
-const PlayArea = ({ grid, enemies, rows, cols, moveEnemy, renderGridArray }) => {
+const PlayArea = ({ enemies, renderGridArray }) => {
+    let [useGrid, setGrid] = useState(false);
 
     useEffect(() => {
         renderGridArray();
+        setGrid(true);
     }, []);
-
-    setInterval(() => {
-        moveEnemy(1, enemies[0].position + 1);
-    }, 500);
 
     return (
         <>
-            {grid && <Grid grid={grid} rows={rows} cols={cols} enemies={enemies} />}
+            {useGrid && <Grid />}
         </>
     );
 };
 
 const mapStateToProps = state => ({
-    grid: getGrid(state),
-    enemies: getEnemies(state),
-    rows: getRows(state),
-    cols: getCols(state)
+    // grid: getGrid(state),
+    enemies: getEnemies(state)
+    // rows: getRows(state),
+    // cols: getCols(state)
 });
 
 const mapDispatchToProps = dispatch => ({
