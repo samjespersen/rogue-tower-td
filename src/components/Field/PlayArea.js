@@ -1,54 +1,44 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { getGrid, getEnemies, getRows, getCols } from '../../selectors/gameSelectors';
-import { renderGrid, moveEnemy } from '../../actions/gameActions';
+import React, { useState, useContext, useEffect } from 'react';
 import Grid from './Grid';
+import { store } from '../../store';
+import grids from '../../gameData/grid';
 
-const PlayArea = ({ enemies, renderGridArray }) => {
-    let [useGrid, setGrid] = useState(false);
+const PlayArea = () => {
+    const globalState = useContext(store);
+    const { state, dispatch } = globalState;
+
+    //set grid
+    const [useGrid, setGrid] = useState({ grid: [], rows: 0, cols: 0 });
 
     useEffect(() => {
-        renderGridArray();
-        setGrid(true);
+        dispatch({
+            type: 'LOAD_GRID',
+            payload: grids[Math.floor(Math.random() * grids.length)]
+        });
+        dispatch({
+            type: 'RENDER_GRID'
+        });
     }, []);
 
+    useEffect(() => {
+        if(!globalState.state.gridRender) return;
+
+        setGrid({
+            grid: state.gridRender,
+            rows: state.grid.length,
+            cols: state.grid[0].length
+        });
+    }, [state.gridRender]);
+
+
+
+    //render
     return (
         <>
-            {useGrid && <Grid />}
+            <Grid gridObj={useGrid} />
         </>
     );
 };
 
-const mapStateToProps = state => ({
-    // grid: getGrid(state),
-    enemies: getEnemies(state)
-    // rows: getRows(state),
-    // cols: getCols(state)
-});
 
-const mapDispatchToProps = dispatch => ({
-    renderGridArray() {
-        dispatch(renderGrid());
-    },
-    moveEnemy(id, newPos) {
-        dispatch(moveEnemy(id, newPos));
-    }
-});
-
-
-
-PlayArea.propTypes = {
-    grid: PropTypes.array,
-    renderGridArray: PropTypes.func,
-    enemies: PropTypes.array,
-    rows: PropTypes.number,
-    cols: PropTypes.number,
-    moveEnemy: PropTypes.func
-};
-
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(PlayArea);
+export default PlayArea;

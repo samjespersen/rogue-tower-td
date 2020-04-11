@@ -1,28 +1,7 @@
-import { RENDER_GRID, MOVE_ENEMY } from '../actions/gameActions';
-import { grid, grid2 } from '../gameData/grid';
-
-const initialState = {
-    player: {
-        hp: 100,
-        live: true
-    },
-    grid: grid,
-    gridRender: null,
-    enemies: [
-        {
-            id: 1,
-            position: 5,
-            hp: 10,
-            live: true,
-            speed: 500
-        }
-    ],
-
-};
-
-const reducer = (state = initialState, action) => {
+const gameReducer = (state, action) => {
     switch(action.type) {
-        case RENDER_GRID: {
+        case 'LOAD_GRID': return { ...state, grid: action.payload };
+        case 'RENDER_GRID': {
             const rows = state.grid.length;
             const cols = state.grid[0].length;
 
@@ -49,7 +28,7 @@ const reducer = (state = initialState, action) => {
             }
             return { ...state, gridRender: plot };
         }
-        case MOVE_ENEMY:
+        case 'MOVE_ENEMY':
             return {
                 ...state, enemies: state.enemies.map(e => {
                     if(e.id === action.payload.id) {
@@ -63,4 +42,4 @@ const reducer = (state = initialState, action) => {
     }
 };
 
-export default reducer;
+export default gameReducer;

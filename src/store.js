@@ -1,9 +1,30 @@
-import { createStore } from 'redux';
-import reducer from './reducers';
+import React, { createContext, useReducer } from 'react';
+import gameReducer from './reducers/gameReducer';
 
-const store = createStore(
-    reducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const initialState = {
+    player: {
+        hp: 100,
+        live: true
+    },
+    grid: null,
+    gridRender: null,
+    enemies: [
+        {
+            id: 1,
+            position: 5,
+            hp: 10,
+            live: true,
+            speed: 500
+        }
+    ],
+};
 
-export default store;
+const store = createContext(initialState);
+const { Provider } = store;
+
+const StateProvider = ({ children }) => {
+    const [state, dispatch] = useReducer(gameReducer, initialState);
+    return <Provider value={{ state, dispatch }}>{children}</Provider>;
+};
+
+export { store, StateProvider };
